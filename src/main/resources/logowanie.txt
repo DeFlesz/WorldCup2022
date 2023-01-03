@@ -1,0 +1,2 @@
+hubert.malkowski@gmail.com haslomaslo
+{"status":"success","message":"User created","data":{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzdlM2U1NTU3MDgxNjZkMDdkMTI1MWMiLCJpYXQiOjE2NjkyMTc4NzcsImV4cCI6MTY2OTMwNDI3N30.JJ9h7Kg6F1OgtCjBH9n2y9LLLogOZ9n7ncAO3_kkTk4"}}

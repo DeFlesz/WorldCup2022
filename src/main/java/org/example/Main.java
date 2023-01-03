@@ -1,0 +1,255 @@
+package org.example;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
+import java.util.stream.Collectors;
+
+/*
+TODO:
+ [] Ekran logawania i rejestracji (TabbedPane)
+ [] Abstrakja api (może singleton)
+ [] Obsługa rejestracji i logowania (UserModel, Controller)
+ ----------------------------------------------------------
+ [] zczytanie potrzebnych danych
+ [] Model meczu, model drużyny itd.
+ [] Wyświetlanie meczy (View), obsługa filtrów itd. <- coś w stylu recycler view
+ [] Wejście w szczegóły meczu <- może
+ [] Wejście w szczegóły drużyny (pokazanie rozegranych meczów)
+ */
+
+public class Main {
+    public Main() throws IOException {
+    }
+
+    public static void main(String[] args) {
+        AppFrame appFrame = new AppFrame();
+    }
+
+//    public static void main(String[] args) throws Exception {
+////        System.out.println("Mundial!");
+//
+//        URL loginURL = new URL("http://api.cup2022.ir/api/v1/user/login");
+//        String login = "hubert.malkowski@gmail.com";
+//        String password = "haslomaslo";
+//
+//        HttpURLConnection connection = (HttpURLConnection) loginURL.openConnection();
+//        connection.setRequestMethod("POST");
+//        connection.setRequestProperty("Content-Type", "application/json");
+//        connection.setDoOutput(true);
+//        connection.getOutputStream().write(("{\"email\": \"" + login + "\", \"password\": \"" + password + "\"}").getBytes(StandardCharsets.UTF_8));
+//        String token = "";
+//        Scanner scanner = new Scanner(connection.getInputStream());
+//        while (scanner.hasNext()){
+//            token+= scanner.nextLine();
+//        }
+//        scanner.close();
+//        JSONObject dataObj = new JSONObject(token);
+//        JSONObject dataObj2 = dataObj.getJSONObject("data");
+////        System.out.println(dataObj2.get("token").toString());
+//
+//        URL matchURL = new URL("http://api.cup2022.ir/api/v1/match");
+//        HttpURLConnection matchConn = (HttpURLConnection) matchURL.openConnection();
+//        matchConn.setRequestMethod("GET");
+//        matchConn.setRequestProperty("Authorization", "Bearer "+dataObj2.get("token").toString());
+//        matchConn.setRequestProperty("Content-type", "application/json");
+//        String reply = "";
+//        scanner = new Scanner(matchConn.getInputStream());
+//        while (scanner.hasNext()){
+//            reply += scanner.nextLine();
+//        }
+//        scanner.close();
+//        JSONObject dataObj3 = new JSONObject(reply);
+//        JSONArray arr = dataObj3.getJSONArray("data");
+//
+//        ArrayList<HashMap<String, String>> matches = new ArrayList<>();
+//
+//        for (int i = 0; i < arr.length(); i++) {
+//            JSONObject O = arr.getJSONObject(i);
+////            String string = O.get("home_team_en") + " " +
+////                    O.get("home_score") + ":" +
+////                    O.get("away_score") + " " +
+////                    O.get("away_team_en");
+//
+//            HashMap<String, String> match = new HashMap<>();
+//
+//            match.put("host", ""+O.get("home_team_en"));
+//            match.put("guest", ""+O.get("away_team_en"));
+//            match.put("host_score", ""+O.get("home_score"));
+//            match.put("guest_score", ""+O.get("away_score"));
+//            match.put("host_flag", ""+O.get("home_flag"));
+//            match.put("guest_flag", ""+O.get("away_flag"));
+//
+//            matches.add(match);
+////            System.out.println(
+////                    string
+////            );
+//        }
+//
+//        JFrame jFrame = new JFrame("Mundial");
+//        jFrame.setSize(800, 600);
+//        jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        JPanel panel = new JPanel();
+//        panel.setBorder(new EmptyBorder(10, 10, 10, 10));
+//        panel.setLayout(new GridLayout(matches.size(), 5, 0, 10));
+//
+//        JLabel header = new JLabel("Mistrzostwa świata 2022:", SwingConstants.LEFT);
+////        panel.add(new JLabel("a"));
+////        panel.add(new JLabel("a"));
+//
+//
+//        Set<String> countries = new TreeSet<>();
+//        countries.add("all");
+//
+//        for (HashMap<String, String> map :
+//                matches) {
+//            if (map.get("host").contains("--") || map.get("guest").contains("--")) {
+//                continue;
+//            }
+//
+//            countries.add(map.get("host"));
+//            countries.add(map.get("guest"));
+//
+//            JLabel hostLabel = new JLabel(map.get("host"));
+//            JLabel scoreLabel = new JLabel(map.get("host_score") + " : " + map.get("guest_score"), SwingConstants.CENTER);
+//            JLabel guestLabel = new JLabel(map.get("guest"), SwingConstants.RIGHT);
+//
+////            System.out.println(map.get("host_flag") + " " + map.get("guest_flag"));
+//
+//            URL hostFlagURL = new URL(map.get("host_flag"));
+//            URLConnection hostConn = hostFlagURL.openConnection();
+//            hostConn.setRequestProperty("User-Agent", "Mozilla/5.0");
+//
+//            hostConn.connect();
+//            InputStream hostURLStream = hostConn.getInputStream();
+//
+//
+//            BufferedImage hostFlag = ImageIO.read(hostURLStream);
+//            hostURLStream.close();
+//
+//            URL guestFlagURL = new URL(map.get("guest_flag"));
+//            URLConnection guestConn = hostFlagURL.openConnection();
+//            guestConn.setRequestProperty("User-Agent", "Mozilla/5.0");
+//
+//            guestConn.connect();
+//            InputStream guestURLStream = guestConn.getInputStream();
+//
+//            BufferedImage guestFlag = ImageIO.read(guestFlagURL);
+//            guestURLStream.close();
+//
+//            ImageIcon hostFlagIcon = new ImageIcon(hostFlag);
+//            JLabel hostFlagLabel = new JLabel(hostFlagIcon);
+//
+//            ImageIcon guestFlagIcon = new ImageIcon(guestFlag);
+//            JLabel guestFlagLabel = new JLabel(guestFlagIcon);
+//
+//            panel.add(hostFlagLabel);
+//            panel.add(hostLabel);
+//            panel.add(scoreLabel);
+//            panel.add(guestLabel);
+//            panel.add(guestFlagLabel);
+//        }
+//
+//        Container container = jFrame.getContentPane();
+//
+//        System.out.println(countries);
+//        JComboBox comboBox = new JComboBox(countries.toArray());
+//        comboBox.setBorder(new EmptyBorder(10, 10, 10, 10));
+//
+//        header.setBorder(new EmptyBorder(10, 10, 10, 10));
+//
+//        comboBox.addActionListener(l -> {
+//            try {
+//                populatePanel(matches,(String) comboBox.getItemAt(comboBox.getSelectedIndex()), panel);
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//        });
+//
+////        container.add(header);
+////        container.add(panel);
+//
+//        JScrollPane scrollpane = new JScrollPane(panel);
+//        jFrame.getContentPane().add(comboBox);
+//        jFrame.getContentPane().add(scrollpane);
+//
+//        jFrame.setLayout(new BoxLayout(jFrame.getContentPane(), BoxLayout.Y_AXIS));
+////        jFrame.setLayout(new BoxLayout(jFrame.getContentPane(), BoxLayout.Y_AXIS));
+//
+//        jFrame.setVisible(true);
+////        ScrollPane scrollPane = new ScrollPane()
+//
+//        System.out.println(matches);
+//    }
+//
+//    public static void populatePanel(ArrayList<HashMap<String, String>> matches, String country, JPanel panel) throws IOException {
+//        panel.removeAll();
+//
+//        panel.setBorder(new EmptyBorder(10, 10, 10, 10));
+//        panel.setLayout(new GridLayout(matches.size(), 5, 0, 10));
+//
+//        for (HashMap<String, String> map :
+//                matches) {
+//            if (!(map.get("host").equals(country) || map.get("guest").equals(country))) {
+//                continue;
+//            }
+//
+//            if (map.get("host").contains("--") || map.get("guest").contains("--")) {
+//                continue;
+//            }
+//
+//            JLabel hostLabel = new JLabel(map.get("host"));
+//            JLabel scoreLabel = new JLabel(map.get("host_score") + " : " + map.get("guest_score"), SwingConstants.CENTER);
+//            JLabel guestLabel = new JLabel(map.get("guest"), SwingConstants.RIGHT);
+//
+////            System.out.println(map.get("host_flag") + " " + map.get("guest_flag"));
+//
+//            URL hostFlagURL = new URL(map.get("host_flag"));
+//            URLConnection hostConn = hostFlagURL.openConnection();
+//            hostConn.setRequestProperty("User-Agent", "Mozilla/5.0");
+//
+//            hostConn.connect();
+//            InputStream hostURLStream = hostConn.getInputStream();
+//
+//
+//            BufferedImage hostFlag = ImageIO.read(hostURLStream);
+//            hostURLStream.close();
+//
+//            URL guestFlagURL = new URL(map.get("guest_flag"));
+//            URLConnection guestConn = hostFlagURL.openConnection();
+//            guestConn.setRequestProperty("User-Agent", "Mozilla/5.0");
+//
+//            guestConn.connect();
+//            InputStream guestURLStream = guestConn.getInputStream();
+//
+//            BufferedImage guestFlag = ImageIO.read(guestFlagURL);
+//            guestURLStream.close();
+//
+//            ImageIcon hostFlagIcon = new ImageIcon(hostFlag);
+//            JLabel hostFlagLabel = new JLabel(hostFlagIcon);
+//
+//            ImageIcon guestFlagIcon = new ImageIcon(guestFlag);
+//            JLabel guestFlagLabel = new JLabel(guestFlagIcon);
+//
+//            panel.add(hostFlagLabel);
+//            panel.add(hostLabel);
+//            panel.add(scoreLabel);
+//            panel.add(guestLabel);
+//            panel.add(guestFlagLabel);
+//        }
+//    }
+}
