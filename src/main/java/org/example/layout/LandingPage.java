@@ -1,26 +1,32 @@
 package org.example.layout;
 
 import org.example.controller.SessionController;
+import org.example.view.MatchLadderPanel;
+import org.example.view.MatchListPanel;
+import org.example.view.StandingsPanel;
+import org.example.view.TeamsPanel;
 
 import javax.swing.*;
-import java.awt.*;
 
-public class LandingPage extends JPanel {
+public class LandingPage extends JTabbedPane {
     SessionController sessionController;
-
-//   Might be a tabbed layout
-//   TODO
-//    teams
-//    match list
-//    match ladder
-//    group standings
+    TeamsPanel teamsPanel;
+    MatchListPanel matchListPanel;
+    MatchLadderPanel matchLadderPanel;
+    StandingsPanel standingsPanel;
 
     public LandingPage(SessionController sessionController) {
         System.out.println("Creating [LandingPage]");
         this.sessionController = sessionController;
 
-        System.out.println(sessionController.getToken());
+        teamsPanel = new TeamsPanel();
+        matchListPanel = new MatchListPanel(sessionController);
+        matchLadderPanel = new MatchLadderPanel();
+        standingsPanel = new StandingsPanel();
 
-        add(new JLabel(sessionController.getToken()), BorderLayout.CENTER);
+        addTab("Teams", teamsPanel);
+        addTab("Matches", matchListPanel);
+        addTab("Ladder", matchLadderPanel);
+        addTab("Standings", standingsPanel);
     }
 }

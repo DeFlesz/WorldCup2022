@@ -36,7 +36,7 @@ public class AppFrame extends JFrame {
             landingPage = new LandingPage(sessionController);
 
         add(landingPage);
-        invalidate();
+        refreshLayout();
     }
 
     public void bringToSignUp() {
@@ -48,7 +48,13 @@ public class AppFrame extends JFrame {
             signUpPage = new SignUpPage(sessionController);
 
         add(signUpPage);
+        refreshLayout();
+    }
+
+    public void refreshLayout() {
         invalidate();
+        validate();
+        repaint();
     }
 
     public SessionController getSessionController() {

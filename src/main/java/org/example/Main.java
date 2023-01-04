@@ -1,24 +1,5 @@
 package org.example;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
-import java.nio.charset.StandardCharsets;
-import java.util.*;
-import java.util.stream.Collectors;
-
 /*
 TODO:
  [] Ekran logawania i rejestracji (TabbedPane)
@@ -33,7 +14,7 @@ TODO:
  */
 
 public class Main {
-    public Main() throws IOException {
+    public Main() {
     }
 
     public static void main(String[] args) {
@@ -42,25 +23,7 @@ public class Main {
 
 //    public static void main(String[] args) throws Exception {
 ////        System.out.println("Mundial!");
-//
-//        URL loginURL = new URL("http://api.cup2022.ir/api/v1/user/login");
-//        String login = "hubert.malkowski@gmail.com";
-//        String password = "haslomaslo";
-//
-//        HttpURLConnection connection = (HttpURLConnection) loginURL.openConnection();
-//        connection.setRequestMethod("POST");
-//        connection.setRequestProperty("Content-Type", "application/json");
-//        connection.setDoOutput(true);
-//        connection.getOutputStream().write(("{\"email\": \"" + login + "\", \"password\": \"" + password + "\"}").getBytes(StandardCharsets.UTF_8));
-//        String token = "";
-//        Scanner scanner = new Scanner(connection.getInputStream());
-//        while (scanner.hasNext()){
-//            token+= scanner.nextLine();
-//        }
-//        scanner.close();
-//        JSONObject dataObj = new JSONObject(token);
-//        JSONObject dataObj2 = dataObj.getJSONObject("data");
-////        System.out.println(dataObj2.get("token").toString());
+
 //
 //        URL matchURL = new URL("http://api.cup2022.ir/api/v1/match");
 //        HttpURLConnection matchConn = (HttpURLConnection) matchURL.openConnection();

@@ -1,29 +1,50 @@
 package org.example.controller;
 
+import org.example.API.ApiAuthResponse;
+import org.example.API.WorldCupAPI;
 import org.example.model.LoginUserModel;
 import org.example.view.LoginPanel;
+
+import java.io.IOException;
 
 public class LoginController {
     LoginPanel context;
     SessionController sessionController;
+    WorldCupAPI api;
 
     public LoginController(LoginPanel context, SessionController sessionController) {
         this.context = context;
         this.sessionController = sessionController;
+        api = new WorldCupAPI();
 
         context.getSubmitButton().addActionListener(l -> {
-//          TODO -> validation, api response, landing
-            LoginUserModel loginUserModel = new LoginUserModel(
+            LoginUserModel loginUser = new LoginUserModel(
                     getEmail(),
                     getPassword()
             );
-            System.out.println(loginUserModel);
-//          TODO -> put here api response why validation failed
-            setValidationText("login validation");
+            System.out.println(loginUser);
+//            sessionController.setToken("asdf");
+//            sessionController.invalidate();
+            try {
+                ApiAuthResponse response = api.login(loginUser);
+                String status = response.getStatus();
 
-//            for testing purposes, finally put here api response
-            sessionController.setToken(loginUserModel.toString());
-            sessionController.invalidate();
+                switch (status){
+                    case "success":
+                        sessionController.setToken(response.getToken());
+                        sessionController.invalidate();
+                        break;
+                    case "error":
+                        setValidationText(response.getMessage());
+                        break;
+
+                    default:
+                        System.out.println("unimplemented status value: " + status);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                setValidationText("couldn't get an API response");
+            }
         });
     }
 

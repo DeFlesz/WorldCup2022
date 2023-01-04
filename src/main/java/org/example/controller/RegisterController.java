@@ -1,25 +1,52 @@
 package org.example.controller;
 
+import org.example.API.ApiAuthResponse;
+import org.example.API.WorldCupAPI;
 import org.example.model.RegisterUserModel;
 import org.example.view.RegisterPanel;
 
+import java.io.IOException;
+
 public class RegisterController {
+    WorldCupAPI api;
     RegisterPanel context;
     SessionController sessionController;
     public RegisterController(RegisterPanel context, SessionController sessionController) {
         this.context = context;
         this.sessionController = sessionController;
 
+        api = new WorldCupAPI();
+
         context.getSubmitButton().addActionListener(l -> {
-            RegisterUserModel registerUserModel = new RegisterUserModel(getName(),
+            RegisterUserModel registerUser = new RegisterUserModel(
+                    getName(),
                     getEmail(),
                     getPassword(),
                     getConfirmPassword()
             );
 
-            System.out.println(registerUserModel);
-//          TODO -> put here api response why validation failed
-            setValidationText("register validation");
+            System.out.println(registerUser);
+
+            try {
+                ApiAuthResponse response = api.register(registerUser);
+                String status = response.getStatus();
+
+                switch (status){
+                    case "success":
+                        sessionController.setToken(response.getToken());
+                        sessionController.invalidate();
+                        break;
+                    case "error":
+                        setValidationText(response.getMessage());
+                        break;
+
+                    default:
+                        System.out.println("unimplemented status value: " + status);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                setValidationText("couldn't get an API response");
+            }
         });
     }
 
