@@ -1,6 +1,5 @@
 package org.example.controller;
 
-import org.example.AppFrame;
 import org.example.model.LoginUserModel;
 import org.example.view.LoginPanel;
 
@@ -23,8 +22,8 @@ public class LoginController {
             setValidationText("login validation");
 
 //            for testing purposes, finally put here api response
-//            sessionController.setToken("aaa");
-//            sessionController.invalidate();
+            sessionController.setToken(loginUserModel.toString());
+            sessionController.invalidate();
         });
     }
 
