@@ -1,10 +1,10 @@
 package org.example.model;
 
-public class LoginUserModel {
+public class LoginUser {
     String email;
     String password;
 
-    public LoginUserModel(String email, String password) {
+    public LoginUser(String email, String password) {
         this.email = email;
         this.password = password;
     }

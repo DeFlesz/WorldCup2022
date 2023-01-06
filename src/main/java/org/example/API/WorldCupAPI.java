@@ -1,7 +1,10 @@
 package org.example.API;
 
-import org.example.model.LoginUserModel;
-import org.example.model.RegisterUserModel;
+import org.example.builder.TeamBuilder;
+import org.example.model.LoginUser;
+import org.example.model.RegisterUser;
+import org.example.model.Team;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -10,6 +13,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class WorldCupAPI {
@@ -46,7 +50,7 @@ public class WorldCupAPI {
         return url;
     }
 
-    public ApiAuthResponse register(RegisterUserModel registerUser) throws IOException {
+    public ApiAuthResponse register(RegisterUser registerUser) throws IOException {
         return requestApiAuthResponse("{" +
                         "\"name\": \"" + registerUser.getName() + "\"," +
                         "\"email\": \"" + registerUser.getEmail() + "\"," +
@@ -55,11 +59,81 @@ public class WorldCupAPI {
                         "\"}", registerURL);
     }
 
-    public ApiAuthResponse login(LoginUserModel loginUser) throws IOException {
+    public ApiAuthResponse login(LoginUser loginUser) throws IOException {
          return requestApiAuthResponse("{" +
                 "\"email\": \"" + loginUser.getEmail() + "\"," +
                 " \"password\": \"" + loginUser.getPassword() +
                 "\"}", loginURL);
+    }
+
+    public Team requestTeamData(String token, String teamID) throws IOException {
+        URL matchURL = new URL("http://api.cup2022.ir/api/v1/team/"+teamID);
+        HttpURLConnection matchConn = (HttpURLConnection) matchURL.openConnection();
+        matchConn.setRequestMethod("GET");
+        matchConn.setRequestProperty("Authorization", "Bearer "+token);
+        matchConn.setRequestProperty("Content-type", "application/json");
+        String response = "";
+        Scanner scanner = new Scanner(matchConn.getInputStream());
+        while (scanner.hasNext()){
+            response += scanner.nextLine();
+        }
+        scanner.close();
+        JSONObject responseJSON = new JSONObject(response);
+        JSONObject data = responseJSON.getJSONObject("data");
+        Team team = new TeamBuilder()
+                .set_id(retrieveString(data, "_id"))
+                .setId(retrieveString(data, "id"))
+                .setName(retrieveString(data, "name_en"))
+                .setFlag(retrieveString(data, "flag"))
+                .setFifa_code(retrieveString(data, "fifa_code"))
+                .setGroup(retrieveString(data, "groups"))
+                .createTeam();
+
+        System.out.println("Team: " + team);
+
+        return team;
+    }
+
+    public ArrayList<Team> requestAllTeamsData(String token) throws IOException {
+        URL matchURL = new URL("http://api.cup2022.ir/api/v1/team");
+        HttpURLConnection matchConn = (HttpURLConnection) matchURL.openConnection();
+        matchConn.setRequestMethod("GET");
+        matchConn.setRequestProperty("Authorization", "Bearer "+token);
+        matchConn.setRequestProperty("Content-type", "application/json");
+        String response = "";
+        Scanner scanner = new Scanner(matchConn.getInputStream());
+        while (scanner.hasNext()){
+            response += scanner.nextLine();
+        }
+        scanner.close();
+        JSONObject responseJSON = new JSONObject(response);
+        JSONArray teamJSONArray = responseJSON.getJSONArray("data");
+        ArrayList<Team> teamArray = new ArrayList<>();
+
+        for (int i = 0; i < teamJSONArray.length(); i++) {
+            JSONObject teamJSON = teamJSONArray.getJSONObject(i);
+            Team team = new TeamBuilder()
+                    .set_id(retrieveString(teamJSON, "_id"))
+                    .setId(retrieveString(teamJSON, "id"))
+                    .setName(retrieveString(teamJSON, "name_en"))
+                    .setFlag(retrieveString(teamJSON, "flag"))
+                    .setFifa_code(retrieveString(teamJSON, "fifa_code"))
+                    .setGroup(retrieveString(teamJSON, "groups"))
+                    .createTeam();
+
+            teamArray.add(team);
+        }
+
+        System.out.println("Teams: " + teamArray);
+        return teamArray;
+//        return new TeamBuilder()
+//                .set_id(retrieveString(data, "_id"))
+//                .setId(retrieveString(data, "id"))
+//                .setName(retrieveString(data, "name_en"))
+//                .setFlag(retrieveString(data, "flag"))
+//                .setFifa_code(retrieveString(data, "fifa_code"))
+//                .setGroup(retrieveString(data, "groups"))
+//                .createTeam();
     }
 
     public ApiAuthResponse requestApiAuthResponse(String request, URL url) throws IOException {

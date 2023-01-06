@@ -2,7 +2,7 @@ package org.example.controller;
 
 import org.example.API.ApiAuthResponse;
 import org.example.API.WorldCupAPI;
-import org.example.model.LoginUserModel;
+import org.example.model.LoginUser;
 import org.example.view.LoginPanel;
 
 import java.io.IOException;
@@ -18,7 +18,7 @@ public class LoginController {
         api = new WorldCupAPI();
 
         context.getSubmitButton().addActionListener(l -> {
-            LoginUserModel loginUser = new LoginUserModel(
+            LoginUser loginUser = new LoginUser(
                     getEmail(),
                     getPassword()
             );

@@ -2,7 +2,7 @@ package org.example.controller;
 
 import org.example.API.ApiAuthResponse;
 import org.example.API.WorldCupAPI;
-import org.example.model.RegisterUserModel;
+import org.example.model.RegisterUser;
 import org.example.view.RegisterPanel;
 
 import java.io.IOException;
@@ -18,7 +18,7 @@ public class RegisterController {
         api = new WorldCupAPI();
 
         context.getSubmitButton().addActionListener(l -> {
-            RegisterUserModel registerUser = new RegisterUserModel(
+            RegisterUser registerUser = new RegisterUser(
                     getName(),
                     getEmail(),
                     getPassword(),
