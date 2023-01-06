@@ -20,11 +20,7 @@ public class LandingPage extends JTabbedPane {
         System.out.println("Creating [LandingPage]");
         this.sessionController = sessionController;
 
-        try {
-            teamsPanel = new TeamsPanel(sessionController);
-        } catch (IOException e){
-            e.printStackTrace();
-        }
+        teamsPanel = new TeamsPanel(sessionController);
         matchListPanel = new MatchListPanel(sessionController);
         matchLadderPanel = new MatchLadderPanel();
         standingsPanel = new StandingsPanel();

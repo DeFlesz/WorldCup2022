@@ -1,19 +1,31 @@
 package org.example.view;
 
-import org.example.API.WorldCupAPI;
 import org.example.controller.SessionController;
-import org.example.model.Team;
+import org.example.controller.TeamsController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
-import java.util.ArrayList;
 
 public class TeamsPanel extends JPanel {
+    JPanel teamsPanel;
 
-    public TeamsPanel(SessionController sessionController) throws IOException {
-        add(new JLabel("Teams Panel"), BorderLayout.CENTER);
+    TeamsController teamsController;
 
-        ArrayList<Team> teams = new WorldCupAPI().requestAllTeamsData(sessionController.getToken());
+    public TeamsPanel(SessionController sessionController) {
+        setLayout(new BorderLayout());
+        add(new JLabel("Teams Panel"), BorderLayout.NORTH);
+
+        teamsPanel = new JPanel();
+        teamsPanel.setLayout(new BoxLayout(teamsPanel, BoxLayout.Y_AXIS));
+        add(new JScrollPane(teamsPanel), BorderLayout.CENTER);
+
+
+        teamsController = new TeamsController(sessionController, this);
+        setVisible(true);
+//        ArrayList<Team> teams = new WorldCupAPI().requestAllTeamsData(sessionController.getToken());
+    }
+
+    public JPanel getTeamsPanel() {
+        return teamsPanel;
     }
 }
