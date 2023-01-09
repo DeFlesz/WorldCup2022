@@ -18,11 +18,13 @@ public class AppFrame extends JFrame {
 
     public AppFrame() {
         System.out.println("Creating [AppFrame]");
+        setTitle("World Cup 2022");
 
         setSize(new Dimension(width, height));
 
         sessionController.invalidate();
 
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }

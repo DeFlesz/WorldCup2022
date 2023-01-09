@@ -5,6 +5,7 @@ import org.example.controller.RegisterController;
 import org.example.controller.SessionController;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class RegisterPanel extends JPanel {
     RegisterController registerController;
@@ -19,8 +20,33 @@ public class RegisterPanel extends JPanel {
     JButton submitButton = new JButton("Submit");
 
     public RegisterPanel(SessionController sessionController) {
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+//        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        GroupLayout groupLayout = new GroupLayout(this);
+        setLayout(groupLayout);
+        groupLayout.setAutoCreateGaps(true);
+        groupLayout.setAutoCreateContainerGaps(true);
+
         registerController = new RegisterController(this, sessionController);
+
+        validationText.setForeground(new Color(0xFF0000));
+
+        groupLayout.setHorizontalGroup(groupLayout.createParallelGroup()
+                .addComponent(nameInput)
+                .addComponent(emailInput)
+                .addComponent(passwordInput)
+                .addComponent(confirmPasswordInput)
+                .addComponent(validationText)
+                .addComponent(submitButton));
+
+        groupLayout.setVerticalGroup(groupLayout.createSequentialGroup()
+                .addComponent(nameInput)
+                .addComponent(emailInput)
+                .addComponent(passwordInput)
+                .addComponent(confirmPasswordInput)
+                .addComponent(validationText)
+                .addComponent(submitButton));
+
+//        groupLayout.setHorizontalGroup();
 
         add(nameInput);
         add(emailInput);

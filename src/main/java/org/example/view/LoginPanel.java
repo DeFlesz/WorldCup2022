@@ -1,6 +1,5 @@
 package org.example.view;
 
-import org.example.AppFrame;
 import org.example.component.FormInput;
 import org.example.controller.LoginController;
 import org.example.controller.SessionController;
@@ -18,9 +17,29 @@ public class LoginPanel extends JPanel {
     JButton submitButton = new JButton("Submit");
 
     public LoginPanel(SessionController sessionController) {
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+//        setLayout(new GridBagLayout());
 //        setLayout(new FlowLayout(FlowLayout.CENTER, 20, 20));
+        GroupLayout groupLayout = new GroupLayout(this);
+        setLayout(groupLayout);
+        groupLayout.setAutoCreateGaps(true);
+        groupLayout.setAutoCreateContainerGaps(true);
+
         loginController = new LoginController(this, sessionController);
+
+        validationText.setForeground(new Color(0xFF0000));
+
+        groupLayout.setHorizontalGroup(groupLayout.createParallelGroup()
+                .addComponent(emailInput)
+                .addComponent(passwordInput)
+                .addComponent(validationText)
+                .addComponent(submitButton));
+
+        groupLayout.setVerticalGroup(groupLayout.createSequentialGroup()
+                .addComponent(emailInput)
+                .addComponent(passwordInput)
+                .addComponent(validationText)
+                .addComponent(submitButton));
+
 
         add(emailInput);
         add(passwordInput);

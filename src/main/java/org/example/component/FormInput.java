@@ -8,20 +8,23 @@ public class FormInput extends JPanel {
     JTextField input;
 
     int maxWidth = 200;
-    int maxHeight = 100;
+    int maxHeight = 50;
 
     public FormInput(String inputLabel, String inputHint) {
-        label = new JLabel(inputLabel);
-        input = new JTextField(inputHint);
+//        Border border = new EmptyBorder(5, 5, 5, 5);
+
+        label = new JLabel(inputLabel, SwingConstants.LEFT);
+//        label.setOpaque(true);
+//        label.setBackground(new Color(255));
+//        label.setPreferredSize(new Dimension(maxWidth, 32));
+
+//        label.setSize(new Dimension(maxWidth, maxHeight));
+//        label.setBorder(border);
+        input = new JTextField("", 16);
+//        input.setPreferredSize(new Dimension(maxWidth, 50));
+
+//        input.setBorder(border);
         setMaximumSize(new Dimension(maxWidth, maxHeight));
-
-        init();
-    }
-
-    public FormInput(String inputLabel, String inputHint, Dimension d) {
-        label = new JLabel(inputLabel);
-        input = new JTextField(inputHint);
-        setMaximumSize(d);
 
         init();
     }
@@ -31,11 +34,20 @@ public class FormInput extends JPanel {
     }
 
     void init(){
+//        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        GroupLayout groupLayout = new GroupLayout(this);
+        groupLayout.setHorizontalGroup(groupLayout.createParallelGroup()
+                        .addComponent(label)
+                        .addComponent(input));
+        groupLayout.setVerticalGroup(groupLayout.createSequentialGroup()
+                .addComponent(label)
+                .addComponent(input));
 
-//        setMaximumSize(new Dimension(maxWidth, maxHeight));
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setLayout(groupLayout);
+
         add(label);
         add(input);
 
+//        layout.putConstraint(SpringLayout.SOUTH, label, SpringLayout.NORTH, input);
     }
 }

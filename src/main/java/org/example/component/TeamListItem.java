@@ -1,6 +1,7 @@
 package org.example.component;
 
 import org.example.API.WorldCupAPI;
+import org.example.AppFrame;
 import org.example.layout.TeamPopUpPage;
 import org.example.model.Team;
 
@@ -13,7 +14,7 @@ public class TeamListItem extends JPanel {
 
     ImageIcon imageIcon;
 
-    public TeamListItem(Team team) {
+    public TeamListItem(Team team, AppFrame context) {
         setLayout(new FlowLayout());
         this.team = team;
 
@@ -28,7 +29,7 @@ public class TeamListItem extends JPanel {
 
         JButton jButton = new JButton(">");
         jButton.addActionListener(l -> {
-            TeamPopUpPage teamPopUpPage = new TeamPopUpPage(this, team);
+            TeamPopUpPage teamPopUpPage = new TeamPopUpPage(team, context);
         });
 
         add(new JLabel(team.getName()));

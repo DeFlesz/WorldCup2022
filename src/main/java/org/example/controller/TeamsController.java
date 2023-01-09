@@ -21,7 +21,7 @@ public class TeamsController {
 
             teams.forEach(team -> {
 //                System.out.println("binding new label");
-                teamsPanel.getTeamsPanel().add(new TeamListItem(team));
+                teamsPanel.getTeamsPanel().add(new TeamListItem(team, sessionController.getContext()));
             });
 
             teamsPanel.invalidate();

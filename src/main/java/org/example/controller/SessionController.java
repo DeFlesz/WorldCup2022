@@ -41,4 +41,8 @@ public class SessionController {
     public void setToken(String token) {
         this.token = token;
     }
+
+    public AppFrame getContext() {
+        return context;
+    }
 }
