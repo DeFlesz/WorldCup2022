@@ -8,6 +8,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -124,7 +126,7 @@ public class WorldCupAPI {
             teamArray.add(team);
         }
 
-        System.out.println("Teams: " + teamArray);
+//        System.out.println("Teams: " + teamArray);
         return teamArray;
 //        return new TeamBuilder()
 //                .set_id(retrieveString(data, "_id"))
@@ -173,7 +175,7 @@ public class WorldCupAPI {
 
         ApiAuthResponse apiAuthResponse = new ApiAuthResponse(message, token, status);
 
-        System.out.println(apiAuthResponse);
+//        System.out.println(apiAuthResponse);
 
         return apiAuthResponse;
     }
@@ -200,6 +202,23 @@ public class WorldCupAPI {
         } catch (JSONException e) {
             return null;
         }
+    }
+
+    public static Thread setImage(URL imageURL, JLabel imageContainer) {
+        Runnable runnable = () -> {
+//            System.out.println("setImage: async bind item");
+
+
+            ImageIcon imageIcon = null;
+            try {
+                imageIcon = new ImageIcon(ImageIO.read(imageURL));
+                imageContainer.setIcon(imageIcon);
+            } catch (IOException e) {
+                System.out.println("setImage: image not found");
+            }
+        };
+
+        return new Thread(runnable);
     }
 
 }

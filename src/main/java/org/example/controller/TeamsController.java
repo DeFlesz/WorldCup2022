@@ -1,7 +1,7 @@
 package org.example.controller;
 
 import org.example.API.WorldCupAPI;
-import org.example.component.TeamItem;
+import org.example.component.TeamListItem;
 import org.example.model.Team;
 import org.example.view.TeamsPanel;
 
@@ -20,8 +20,8 @@ public class TeamsController {
             ArrayList<Team> teams = new WorldCupAPI().requestAllTeamsData(sessionController.getToken());
 
             teams.forEach(team -> {
-                System.out.println("binding new label");
-                teamsPanel.getTeamsPanel().add(new TeamItem(team));
+//                System.out.println("binding new label");
+                teamsPanel.getTeamsPanel().add(new TeamListItem(team));
             });
 
             teamsPanel.invalidate();

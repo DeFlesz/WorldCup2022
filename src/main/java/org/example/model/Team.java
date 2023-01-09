@@ -1,5 +1,8 @@
 package org.example.model;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 public class Team {
     String _id;
     String id;
@@ -31,6 +34,9 @@ public class Team {
 
     public String getFlag() {
         return flag;
+    }
+    public URL getFlagURL() throws MalformedURLException {
+        return new URL(flag);
     }
 
     public String getFifa_code() {

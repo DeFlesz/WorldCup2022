@@ -1,28 +1,29 @@
 package org.example.component;
 
+import org.example.API.WorldCupAPI;
 import org.example.layout.TeamPopUpPage;
 import org.example.model.Team;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-import java.net.URL;
 
-public class TeamItem extends JPanel {
+public class TeamListItem extends JPanel {
     Team team;
 
     ImageIcon imageIcon;
 
-    public TeamItem(Team team) {
+    public TeamListItem(Team team) {
         setLayout(new FlowLayout());
         this.team = team;
 
         try {
-            imageIcon = new ImageIcon(ImageIO.read(new URL(team.getFlag())));
-            add(new JLabel(imageIcon));
+//            imageIcon = new ImageIcon(ImageIO.read(new URL(team.getFlag())));
+            JLabel imageLabel = new JLabel();
+            WorldCupAPI.setImage(team.getFlagURL(), imageLabel).start();
+            add(imageLabel);
         } catch (IOException e) {
-            System.out.println("couldn't get retrieve an image for: " + team.getFlag());
+            System.out.println("couldn't get retrieve an image for: " + team.getName());
         }
 
         JButton jButton = new JButton(">");

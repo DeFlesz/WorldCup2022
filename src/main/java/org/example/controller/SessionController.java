@@ -6,6 +6,8 @@ public class SessionController {
     AppFrame context;
     String token;
 
+    private static final String TAG = "SessionController: ";
+
     public SessionController(AppFrame context) {
         this.context = context;
         this.token = null;
@@ -17,14 +19,14 @@ public class SessionController {
     }
 
     public void invalidate(){
-        System.out.println("auth check");
+        System.out.println(TAG + "authorization check");
         if(isAuth()){
-            System.out.println("Changing to [LandingPage]");
+            System.out.println(TAG + "Changing to [LandingPage]");
             context.bringToLandingPage();
 
             return;
         }
-        System.out.println("Changing to [SignUpPage]");
+        System.out.println(TAG + "Changing to [SignUpPage]");
         context.bringToSignUp();
     }
 
