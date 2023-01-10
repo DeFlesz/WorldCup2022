@@ -4,7 +4,6 @@ import org.example.controller.SessionController;
 import org.example.view.*;
 
 import javax.swing.*;
-import java.io.IOException;
 
 public class LandingPage extends JTabbedPane {
     SessionController sessionController;
@@ -19,7 +18,7 @@ public class LandingPage extends JTabbedPane {
         this.sessionController = sessionController;
 
         teamsPanel = new TeamsPanel(sessionController);
-        matchListPanel = new MatchListPanel();
+        matchListPanel = new MatchListPanel(sessionController);
         matchLadderPanel = new MatchLadderPanel();
         standingsPanel = new StandingsPanel();
         settingsPanel = new SettingsPanel(sessionController);

@@ -5,6 +5,7 @@ import org.example.component.TeamListItem;
 import org.example.model.Team;
 import org.example.view.TeamsPanel;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -21,7 +22,7 @@ public class TeamsController {
 
             teams.forEach(team -> {
 //                System.out.println("binding new label");
-                teamsPanel.getTeamsPanel().add(new TeamListItem(team, sessionController.getContext()));
+                teamsPanel.getTeamsPanel().add(new TeamListItem(team, sessionController.getContext()), BorderLayout.WEST);
             });
 
             teamsPanel.invalidate();

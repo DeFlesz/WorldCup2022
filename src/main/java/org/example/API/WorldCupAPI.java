@@ -1,7 +1,9 @@
 package org.example.API;
 
+import org.example.builder.MatchBuilder;
 import org.example.builder.TeamBuilder;
 import org.example.model.LoginUser;
+import org.example.model.Match;
 import org.example.model.RegisterUser;
 import org.example.model.Team;
 import org.json.JSONArray;
@@ -68,6 +70,7 @@ public class WorldCupAPI {
                 "\"}", loginURL);
     }
 
+//    not needed - would cause to much traffic on the API server
     public Team requestTeamData(String token, String teamID) throws IOException {
         URL matchURL = new URL("http://api.cup2022.ir/api/v1/team/"+teamID);
         HttpURLConnection matchConn = (HttpURLConnection) matchURL.openConnection();
@@ -138,6 +141,43 @@ public class WorldCupAPI {
 //                .createTeam();
     }
 
+    public ArrayList<Match> requestMatchData(String token) throws IOException {
+        URL matchURL = new URL("http://api.cup2022.ir/api/v1/match");
+        HttpURLConnection matchConn = (HttpURLConnection) matchURL.openConnection();
+        matchConn.setRequestMethod("GET");
+        matchConn.setRequestProperty("Authorization", "Bearer "+token);
+        matchConn.setRequestProperty("Content-type", "application/json");
+        String response = "";
+        Scanner scanner = new Scanner(matchConn.getInputStream());
+        while (scanner.hasNext()){
+            response += scanner.nextLine();
+        }
+        scanner.close();
+        JSONObject responseJSON = new JSONObject(response);
+        JSONArray matchJSONArray = responseJSON.getJSONArray("data");
+        ArrayList<Match> matchArray = new ArrayList<>();
+
+        for (int i = 0; i < matchJSONArray.length(); i++) {
+            JSONObject matchJSON = matchJSONArray.getJSONObject(i);
+            Match match = new MatchBuilder()
+                    .setType(retrieveString(matchJSON, "type"))
+                    .setDate(retrieveString(matchJSON, "local_date"))
+                    .setHomeTeamEn(retrieveString(matchJSON, "home_team_en"))
+                    .setHomeFlag(retrieveString(matchJSON, "home_flag"))
+                    .setHomeScore(""+retrieveInt(matchJSON, "home_score"))
+                    .setAwayTeamEn(retrieveString(matchJSON, "away_team_en"))
+                    .setAwayFlag(retrieveString(matchJSON, "away_flag"))
+                    .setAwayScore(""+retrieveInt(matchJSON, "away_score"))
+                    .createMatch();
+
+            matchArray.add(match);
+        }
+
+//        System.out.println(matchArray);
+
+        return matchArray;
+    }
+
     public ApiAuthResponse requestApiAuthResponse(String request, URL url) throws IOException {
         System.out.println(request);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -185,6 +225,14 @@ public class WorldCupAPI {
             return jsonObject.getString(key);
         } catch (JSONException e) {
             return null;
+        }
+    }
+
+    public int retrieveInt(JSONObject jsonObject, String key){
+        try {
+            return jsonObject.getInt(key);
+        } catch (JSONException e) {
+            return -1;
         }
     }
 

@@ -2,15 +2,25 @@ package org.example;
 
 /*
 TODO:
- [] Ekran logawania i rejestracji (TabbedPane)
- [] Abstrakja api (może singleton)
- [] Obsługa rejestracji i logowania (UserModel, Controller)
+ [x] Ekran logawania i rejestracji (TabbedPane)
+ [x] Abstrakja api (może singleton)
+ [x] Obsługa rejestracji i logowania (UserModel, Controller)
+ [] Zmień TeamListView żeby już w momencie landing page'a zebrać mecze i potem móc je poroździelać dla danej drużyny
+ [] filtrowanie meczów
+ [] wyświetlenie grup
+ [] wybranie grupy którą chce się oglądać
+ [] drabinka meczów (w api na szczęście są podanane etapy wystarczy pogłówkować)
+ [] idk refactoring czy coś
  ----------------------------------------------------------
  [] zczytanie potrzebnych danych
- [] Model meczu, model drużyny itd.
- [] Wyświetlanie meczy (View), obsługa filtrów itd. <- coś w stylu recycler view
- [] Wejście w szczegóły meczu <- może
- [] Wejście w szczegóły drużyny (pokazanie rozegranych meczów)
+ [x] Model meczu
+ [x] model drużyny
+ [] model grup
+ [x] Wyświetlanie meczy
+ [] obsługa filtrów itd
+ __Wejście w szczegóły meczu__ <- nie da się sensownie, plus brak sensu
+ [x] Wejście w szczegóły drużyny
+ [] pokazanie rozegranych meczów dla drużyny
  */
 
 public class Main {

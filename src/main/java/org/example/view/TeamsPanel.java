@@ -12,6 +12,7 @@ public class TeamsPanel extends JPanel {
     TeamsController teamsController;
 
     public TeamsPanel(SessionController sessionController) {
+
         setLayout(new BorderLayout());
         add(new JLabel("Teams Panel"), BorderLayout.NORTH);
 
