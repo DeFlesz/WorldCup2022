@@ -32,7 +32,7 @@ public class LandingPage extends JTabbedPane {
         teamsPanel = new TeamsPanel(sessionController, matches);
         matchListPanel = new FiltrableMatchListPanel(matches);
         matchLadderPanel = new MatchLadderPanel();
-        standingsPanel = new StandingsPanel();
+        standingsPanel = new StandingsPanel(sessionController);
         settingsPanel = new SettingsPanel(sessionController);
 
         addTab("Teams", teamsPanel);

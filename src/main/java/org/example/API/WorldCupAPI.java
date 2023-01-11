@@ -2,10 +2,7 @@ package org.example.API;
 
 import org.example.util.builder.MatchBuilder;
 import org.example.util.builder.TeamBuilder;
-import org.example.util.model.LoginUser;
-import org.example.util.model.Match;
-import org.example.util.model.RegisterUser;
-import org.example.util.model.Team;
+import org.example.util.model.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -172,6 +169,56 @@ public class WorldCupAPI {
 //        System.out.println(matchArray);
 
         return matchArray;
+    }
+
+    public ArrayList<Standing> requestStandingData(String token) throws IOException {
+        URL matchURL = new URL("http://api.cup2022.ir/api/v1/standings");
+        HttpURLConnection matchConn = (HttpURLConnection) matchURL.openConnection();
+        matchConn.setRequestMethod("GET");
+        matchConn.setRequestProperty("Authorization", "Bearer "+token);
+        matchConn.setRequestProperty("Content-type", "application/json");
+        StringBuilder response = new StringBuilder();
+        Scanner scanner = new Scanner(matchConn.getInputStream());
+        while (scanner.hasNext()){
+            response.append(scanner.nextLine());
+        }
+        scanner.close();
+        JSONObject responseJSON = new JSONObject(response.toString());
+        JSONArray standingJSONarray = responseJSON.getJSONArray("data");
+        ArrayList<Standing> standings = new ArrayList<>();
+
+        for (int i = 0; i < standingJSONarray.length(); i++) {
+            JSONObject standingJSON = standingJSONarray.getJSONObject(i);
+            System.out.println(standingJSON);
+
+            try {
+                JSONArray standingTeamJSONArray = standingJSON.getJSONArray("teams");
+                ArrayList<StandingTeam> standingTeams = new ArrayList<>();
+
+                for (int j = 0; j < standingTeamJSONArray.length(); j++) {
+                    JSONObject standingTeamJSON = standingTeamJSONArray.getJSONObject(j);
+
+                    StandingTeam standingTeam = new StandingTeam(
+                            retrieveString(standingTeamJSON, "name_en"),
+                            retrieveString(standingTeamJSON, "pts"),
+                            retrieveString(standingTeamJSON, "flag")
+                    );
+
+                    standingTeams.add(standingTeam);
+                }
+
+                standings.add(
+                        new Standing(retrieveString(standingJSON, "group"),
+                                standingTeams)
+                );
+            } catch (JSONException e) {
+                System.out.println("couldn't get teams");
+            }
+        }
+
+//        System.out.println(matchArray);
+
+        return standings;
     }
 
     public ApiAuthResponse requestApiAuthResponse(String request, URL url) throws IOException {
