@@ -20,6 +20,8 @@ public class AppFrame extends JFrame {
         System.out.println("Creating [AppFrame]");
         setTitle("World Cup 2022");
 
+        setMinimumSize(new Dimension(700, 500));
+
         setSize(new Dimension(width, height));
 
         sessionController.invalidate();

@@ -2,7 +2,7 @@ package org.example.controller;
 
 import org.example.API.ApiAuthResponse;
 import org.example.API.WorldCupAPI;
-import org.example.model.RegisterUser;
+import org.example.util.model.RegisterUser;
 import org.example.view.RegisterPanel;
 
 import java.io.IOException;

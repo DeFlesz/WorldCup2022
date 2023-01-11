@@ -1,11 +1,11 @@
 package org.example.API;
 
-import org.example.builder.MatchBuilder;
-import org.example.builder.TeamBuilder;
-import org.example.model.LoginUser;
-import org.example.model.Match;
-import org.example.model.RegisterUser;
-import org.example.model.Team;
+import org.example.util.builder.MatchBuilder;
+import org.example.util.builder.TeamBuilder;
+import org.example.util.model.LoginUser;
+import org.example.util.model.Match;
+import org.example.util.model.RegisterUser;
+import org.example.util.model.Team;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -77,13 +77,13 @@ public class WorldCupAPI {
         matchConn.setRequestMethod("GET");
         matchConn.setRequestProperty("Authorization", "Bearer "+token);
         matchConn.setRequestProperty("Content-type", "application/json");
-        String response = "";
+        StringBuilder response = new StringBuilder();
         Scanner scanner = new Scanner(matchConn.getInputStream());
         while (scanner.hasNext()){
-            response += scanner.nextLine();
+            response.append(scanner.nextLine());
         }
         scanner.close();
-        JSONObject responseJSON = new JSONObject(response);
+        JSONObject responseJSON = new JSONObject(response.toString());
         JSONObject data = responseJSON.getJSONObject("data");
         Team team = new TeamBuilder()
                 .set_id(retrieveString(data, "_id"))
@@ -105,13 +105,13 @@ public class WorldCupAPI {
         matchConn.setRequestMethod("GET");
         matchConn.setRequestProperty("Authorization", "Bearer "+token);
         matchConn.setRequestProperty("Content-type", "application/json");
-        String response = "";
+        StringBuilder response = new StringBuilder();
         Scanner scanner = new Scanner(matchConn.getInputStream());
         while (scanner.hasNext()){
-            response += scanner.nextLine();
+            response.append(scanner.nextLine());
         }
         scanner.close();
-        JSONObject responseJSON = new JSONObject(response);
+        JSONObject responseJSON = new JSONObject(response.toString());
         JSONArray teamJSONArray = responseJSON.getJSONArray("data");
         ArrayList<Team> teamArray = new ArrayList<>();
 
@@ -126,19 +126,15 @@ public class WorldCupAPI {
                     .setGroup(retrieveString(teamJSON, "groups"))
                     .createTeam();
 
+            if (team.getName().contains("--")) {
+                continue;
+            }
+
             teamArray.add(team);
         }
 
 //        System.out.println("Teams: " + teamArray);
         return teamArray;
-//        return new TeamBuilder()
-//                .set_id(retrieveString(data, "_id"))
-//                .setId(retrieveString(data, "id"))
-//                .setName(retrieveString(data, "name_en"))
-//                .setFlag(retrieveString(data, "flag"))
-//                .setFifa_code(retrieveString(data, "fifa_code"))
-//                .setGroup(retrieveString(data, "groups"))
-//                .createTeam();
     }
 
     public ArrayList<Match> requestMatchData(String token) throws IOException {
@@ -147,13 +143,13 @@ public class WorldCupAPI {
         matchConn.setRequestMethod("GET");
         matchConn.setRequestProperty("Authorization", "Bearer "+token);
         matchConn.setRequestProperty("Content-type", "application/json");
-        String response = "";
+        StringBuilder response = new StringBuilder();
         Scanner scanner = new Scanner(matchConn.getInputStream());
         while (scanner.hasNext()){
-            response += scanner.nextLine();
+            response.append(scanner.nextLine());
         }
         scanner.close();
-        JSONObject responseJSON = new JSONObject(response);
+        JSONObject responseJSON = new JSONObject(response.toString());
         JSONArray matchJSONArray = responseJSON.getJSONArray("data");
         ArrayList<Match> matchArray = new ArrayList<>();
 
@@ -187,7 +183,7 @@ public class WorldCupAPI {
         connection.getOutputStream()
                 .write((request)
                         .getBytes(StandardCharsets.UTF_8));
-        String response = "";
+        StringBuilder response = new StringBuilder();
         Scanner scanner;
         if (connection.getResponseCode() >= 400) {
             scanner = new Scanner(connection.getErrorStream());
@@ -196,10 +192,10 @@ public class WorldCupAPI {
         }
 
         while (scanner.hasNext()){
-            response += scanner.nextLine();
+            response.append(scanner.nextLine());
         }
         scanner.close();
-        JSONObject responseJSON = retrieveJSONObject(response);
+        JSONObject responseJSON = retrieveJSONObject(response.toString());
 
         if (responseJSON == null) {
             return null;
@@ -256,10 +252,8 @@ public class WorldCupAPI {
         Runnable runnable = () -> {
 //            System.out.println("setImage: async bind item");
 
-
-            ImageIcon imageIcon = null;
             try {
-                imageIcon = new ImageIcon(ImageIO.read(imageURL));
+                ImageIcon imageIcon = new ImageIcon(ImageIO.read(imageURL));
                 imageContainer.setIcon(imageIcon);
             } catch (IOException e) {
                 System.out.println("setImage: image not found");

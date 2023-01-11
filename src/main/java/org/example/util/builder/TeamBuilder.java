@@ -1,6 +1,6 @@
-package org.example.builder;
+package org.example.util.builder;
 
-import org.example.model.Team;
+import org.example.util.model.Team;
 
 public class TeamBuilder {
     private String id;

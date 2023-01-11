@@ -1,4 +1,4 @@
-package org.example.model;
+package org.example.util.model;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -30,10 +30,6 @@ public class Match {
         this.type = type;
     }
 
-    public String getHomeFlag() {
-        return homeFlag;
-    }
-
     public URL getHomeFlagURL() throws MalformedURLException {
         return new URL(homeFlag);
     }
@@ -44,10 +40,6 @@ public class Match {
 
     public String getHomeScore() {
         return homeScore;
-    }
-
-    public String getAwayFlag() {
-        return awayFlag;
     }
 
     public URL getAwayFlagURL() throws MalformedURLException {

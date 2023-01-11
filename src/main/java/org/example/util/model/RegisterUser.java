@@ -1,4 +1,4 @@
-package org.example.model;
+package org.example.util.model;
 
 public class RegisterUser extends LoginUser {
     String name;
@@ -14,16 +14,8 @@ public class RegisterUser extends LoginUser {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getConfirmPassword() {
         return confirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
     }
 
     @Override

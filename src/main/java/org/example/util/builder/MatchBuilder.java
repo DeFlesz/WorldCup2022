@@ -1,6 +1,6 @@
-package org.example.builder;
+package org.example.util.builder;
 
-import org.example.model.Match;
+import org.example.util.model.Match;
 
 public class MatchBuilder {
     private String homeFlag;

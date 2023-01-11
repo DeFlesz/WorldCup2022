@@ -2,7 +2,7 @@ package org.example.controller;
 
 import org.example.API.ApiAuthResponse;
 import org.example.API.WorldCupAPI;
-import org.example.model.LoginUser;
+import org.example.util.model.LoginUser;
 import org.example.view.LoginPanel;
 
 import java.io.IOException;

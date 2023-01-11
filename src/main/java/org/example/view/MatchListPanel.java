@@ -1,16 +1,17 @@
 package org.example.view;
 
 import org.example.controller.MatchListController;
-import org.example.controller.SessionController;
+import org.example.util.model.Match;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class MatchListPanel extends JPanel {
     MatchListController matchListController;
     JPanel matchTable;
 
-    public MatchListPanel(SessionController sessionController) {
+    public MatchListPanel(ArrayList<Match> matches, String selector) {
         setLayout(new BorderLayout());
 //        add(new JLabel("Match List Panel", SwingConstants.CENTER), BorderLayout.NORTH);
 
@@ -50,7 +51,7 @@ public class MatchListPanel extends JPanel {
         add(headerPanel, BorderLayout.NORTH);
         add(new JScrollPane(matchTable), BorderLayout.CENTER);
 
-        matchListController = new MatchListController(this, sessionController);
+        matchListController = new MatchListController(this, matches, selector);
         setVisible(true);
     }
 

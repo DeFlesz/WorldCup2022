@@ -1,4 +1,4 @@
-package org.example.model;
+package org.example.util.model;
 
 import java.net.MalformedURLException;
 import java.net.URL;

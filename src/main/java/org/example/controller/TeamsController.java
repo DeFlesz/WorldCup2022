@@ -2,7 +2,8 @@ package org.example.controller;
 
 import org.example.API.WorldCupAPI;
 import org.example.component.TeamListItem;
-import org.example.model.Team;
+import org.example.util.model.Match;
+import org.example.util.model.Team;
 import org.example.view.TeamsPanel;
 
 import java.awt.*;
@@ -13,7 +14,7 @@ public class TeamsController {
     SessionController sessionController;
     TeamsPanel teamsPanel;
 
-    public TeamsController(SessionController sessionController, TeamsPanel teamsPanel) {
+    public TeamsController(SessionController sessionController, ArrayList<Match> matches, TeamsPanel teamsPanel) {
         this.sessionController = sessionController;
         this.teamsPanel = teamsPanel;
 
@@ -22,7 +23,7 @@ public class TeamsController {
 
             teams.forEach(team -> {
 //                System.out.println("binding new label");
-                teamsPanel.getTeamsPanel().add(new TeamListItem(team, sessionController.getContext()), BorderLayout.WEST);
+                teamsPanel.getTeamsPanel().add(new TeamListItem(team, sessionController.getContext(), matches), BorderLayout.WEST);
             });
 
             teamsPanel.invalidate();
