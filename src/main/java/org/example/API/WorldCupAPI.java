@@ -310,4 +310,19 @@ public class WorldCupAPI {
         return new Thread(runnable);
     }
 
+    public static Thread setIcon(URL imageURL, JFrame imageContainer) {
+        Runnable runnable = () -> {
+//            System.out.println("setImage: async bind item");
+
+            try {
+                ImageIcon imageIcon = new ImageIcon(ImageIO.read(imageURL));
+                imageContainer.setIconImage(imageIcon.getImage());
+            } catch (IOException e) {
+                System.out.println("setImage: image not found");
+            }
+        };
+
+        return new Thread(runnable);
+    }
+
 }
